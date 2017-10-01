@@ -1,7 +1,7 @@
 //TODO: debounce direction switch
 
 #include <DigiJoystick.h>
-#include <ArduinoNunchuk.h>
+#include "ArduinoNunchuk.h"
 #include <TinyWireM.h>
 
 #define ROTATION_DETECTOR 1
@@ -30,6 +30,7 @@ const uint32_t longestReasonableRotationTime = 1000 * 60 / SLOWEST_REASONABLE_RP
 ArduinoNunchuk nunchuk = ArduinoNunchuk();
 
 void setup() {
+  DigiJoystick.delay(500);
   nunchuk.init();
   pinMode(ROTATION_DETECTOR, INPUT);//TODO: no pullup on final version
 //  pinMode(DIRECTION_SWITCH_DIGITAL, INPUT);//PULLUP OFF? need resistor divider to avoid reset
@@ -80,7 +81,7 @@ void loop() {
 
   DigiJoystick.setSLIDER(directionSwitch ?(byte) (128+currentSpeed) : (byte)(128-currentSpeed));
 
-//  bitWrite(buttonByte, 2, directionSwitch); 
+  //bitWrite(buttonByte, 2, directionSwitch); 
   DigiJoystick.setButtons((byte) buttonByte, (byte) 0); 
   
   DigiJoystick.delay(10); 
